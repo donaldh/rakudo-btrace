@@ -1,0 +1,16 @@
+BTRACE_HOME=`pwd`/btrace
+DUMPCLASSES=false
+DEBUG=true
+UNSAFE=false
+PROBEDESCPATH=.
+NOSERVER=true
+SCRIPT=Perl6Profiler.class
+OUTPUTFILE=./profile.log
+
+PERL6_PREFIX=../rakudo
+
+BTRACE_COMMAND=-javaagent:${BTRACE_HOME}/build/btrace-agent.jar=dumpClasses=${DUMPCLASSES},debug=${DEBUG},unsafe=${UNSAFE},probeDescPath=${PROBEDESCPATH},noServer=${NOSERVER},script=${SCRIPT},scriptOutputFile=${OUTPUTFILE}
+
+PERL6_COMMAND="-Xms100m -Xbootclasspath/a:/Users/donaldh/git/rakudo/install/languages/nqp/runtime/asm-4.1.jar:/Users/donaldh/git/rakudo/install/languages/nqp/runtime/asm-tree-4.1.jar:/Users/donaldh/git/rakudo/install/languages/nqp/runtime/jline-1.0.jar:/Users/donaldh/git/rakudo/install/languages/nqp/runtime/jna.jar:/Users/donaldh/git/rakudo/install/languages/nqp/runtime/nqp-runtime.jar:/Users/donaldh/git/rakudo/install/languages/nqp/lib/nqp.jar:${PERL6_PREFIX}/rakudo-runtime.jar:${PERL6_PREFIX}/perl6.jar -cp ${PERL6_PREFIX}:${PERL6_PREFIX}/blib:/Users/donaldh/git/rakudo/install/languages/nqp/lib -Dperl6.prefix=${PERL6_PREFIX} -Dperl6.execname="$0" perl6"
+
+exec java -Xshare:off ${BTRACE_COMMAND} ${PERL6_COMMAND} $*
